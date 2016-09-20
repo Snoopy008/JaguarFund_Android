@@ -1,9 +1,11 @@
 package com.example.macavilang.model;
 
+import java.io.Serializable;
+
 /**
  * Created by macavilang on 16/9/19.
  */
-public class CustomerModel {
+public class CustomerModel implements Serializable {
     String id;
     String name;
     String mobile;

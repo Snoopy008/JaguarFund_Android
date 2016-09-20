@@ -41,6 +41,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 
         initView();
         initEvent();
+        initFragment(0);
     }
 
     public void initView(){

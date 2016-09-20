@@ -2,6 +2,7 @@ package com.example.macavilang.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.macavilang.activity.CustomerDetailActivity;
+import com.example.macavilang.activity.ProductDetailActivity;
 import com.example.macavilang.adapter.CustomerListAdapter;
 import com.example.macavilang.adapter.ProductListAdapter;
 import com.example.macavilang.jaguarfund_android.R;
@@ -78,18 +82,20 @@ public class CustomerFragment extends Fragment {
                         final List<CustomerModel> customers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
 
                         ListView customer_listView = (ListView)rootView.findViewById(R.id.customer_listView);
-                        CustomerListAdapter productListAdapter = new CustomerListAdapter(getContext(),customers);
-                        customer_listView.setAdapter(productListAdapter);
+                        CustomerListAdapter customerListAdapter = new CustomerListAdapter(getContext(),customers);
+                        customer_listView.setAdapter(customerListAdapter);
 
-//                        productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                TradeRecordModel tradeRecordModel = tradeRecords.get(i);
-//                                Intent intent = new Intent(getContext(),TradeRecordDetailActivity.class);
-//                                intent.putExtra("tradeRecordId",tradeRecordModel.getId());
-//                                startActivity(intent);
-//                            }
-//                        });
+                        customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                CustomerModel customerModel = customers.get(i);
+                                Intent intent = new Intent(getContext(),CustomerDetailActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("customerModel",customerModel);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
 
                     }
                 }, new Response.ErrorListener() {
