@@ -1,4 +1,4 @@
-package com.example.macavilang.activity;
+package com.example.macavilang.fragment;
 
 
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import com.example.macavilang.jaguarfund_android.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CustomerFragment extends Fragment {
+public class ProductDetail_inverstCustomersFragment extends Fragment {
 
 
-    public CustomerFragment() {
+    public ProductDetail_inverstCustomersFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class CustomerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_customer,container,false);
+        return inflater.inflate(R.layout.activity_product_detail_inverst_customers,container,false);
     }
 
 }

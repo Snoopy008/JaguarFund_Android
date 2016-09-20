@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:padding="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:text="天倪一号"
+            />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/prouctPerNetValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/productName"
+                android:layout_alignParentTop="true"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:text="单位净值:1.0000元"/>
+
+            <TextView
+                android:id="@+id/productAmountNetValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/productName"
+                android:layout_below="@+id/prouctPerNetValue"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:text="累计净值:1.2000元"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/netValueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:text="2016-06-22"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
