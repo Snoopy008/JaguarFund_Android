@@ -11,10 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.macavilang.fragment.CustomerFragment;
+import com.example.macavilang.fragment.HomeFragment;
+import com.example.macavilang.fragment.MyFragment;
+import com.example.macavilang.fragment.ProductFragment;
 import com.example.macavilang.jaguarfund_android.R;
 
 
-public class JFMainPageActivity extends FragmentActivity implements View.OnClickListener{
+public class MainPageActivity extends FragmentActivity implements View.OnClickListener{
     private LinearLayout ll_home;
     private LinearLayout ll_product;
     private LinearLayout ll_customer;
@@ -39,7 +43,7 @@ public class JFMainPageActivity extends FragmentActivity implements View.OnClick
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jf_main_page);
+        setContentView(R.layout.activity_main_page);
 
         initView();
 

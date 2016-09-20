@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 preEditor.commit();
 
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this,JFMainPageActivity.class);
+                intent.setClass(MainActivity.this,MainPageActivity.class);
                 startActivity(intent);
 
             }
@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 //                map.put("password",password.getText().toString());
                 map.put("username","vjfadmin");
                 map.put("password","12345678");
+//                map.put("username","root");
+//                map.put("password","123456");
 
                 return map;
             }

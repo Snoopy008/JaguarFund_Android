@@ -1,4 +1,4 @@
-package com.example.macavilang.activity;
+package com.example.macavilang.fragment;
 
 
 import android.content.Context;

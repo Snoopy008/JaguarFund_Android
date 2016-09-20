@@ -1,14 +1,18 @@
 package com.example.macavilang.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.macavilang.activity.TradeRecordListActivity;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.NetValueModel;
+import com.example.macavilang.model.RememberMessageModel;
 import com.example.macavilang.model.TradeRecordModel;
 
 import java.util.ArrayList;
@@ -60,6 +64,20 @@ public class HomeAdapter extends BaseAdapter {
             view1 = mInflater.inflate(R.layout.layout_customer_trade_record_list_item_tag,null);
             TextView text = (TextView)view1.findViewById(R.id.groupName);
             text.setText((CharSequence) getItem(i));
+            Button moreBtn = (Button)view1.findViewById(R.id.tradeMoreBtn);
+            if (item.equals("最新交易"))
+            {
+                moreBtn.setOnClickListener(new Button.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(ctx, TradeRecordListActivity.class);
+                        ctx.startActivity(intent);
+                    }
+                });
+            }else {
+                moreBtn.setVisibility(View.GONE);
+            }
+
         }else if(item instanceof TradeRecordModel){
             TradeRecordModel tradeRecordModel = (TradeRecordModel)item;
             view1 = mInflater.inflate(R.layout.layout_customer_trade_record_list_item,null);
@@ -90,7 +108,13 @@ public class HomeAdapter extends BaseAdapter {
 
             TextView netValueDateText = (TextView) view1.findViewById(R.id.netValueDate);
             netValueDateText.setText(netValueModel.getLatestMarketDate());
+        }else if(item instanceof RememberMessageModel){
+            RememberMessageModel rememberMessageModel = (RememberMessageModel)item;
+            view1 = mInflater.inflate(R.layout.layout_remember_message_list_item,null);
+            TextView rememberMessageText = (TextView) view1.findViewById(R.id.rememberMessageText);
+            rememberMessageText.setText(rememberMessageModel.getRememberMessageStr());
         }
+
 
 
         return view1;

@@ -24,7 +24,17 @@ public class TradeRecordModel {
 
     private String _tradeRecordStr;
     public String getTradeRecordStr() {
-        _tradeRecordStr = String.format("{0}{1}{2}{3}份", this.clientName, this.tradeType, this.productName, tradeShare);
+        if (tradeType.equals("1"))
+        {
+            _tradeType = "认购";
+        }else if (tradeType.equals("2"))
+        {
+            _tradeType = "申购";
+        }else if (tradeType.equals("3"))
+        {
+            _tradeType = "赎回";
+        }
+        _tradeRecordStr = this.clientName + _tradeType + this.productName + tradeShare + "份";
         return _tradeRecordStr;
     }
 
@@ -147,23 +157,22 @@ public class TradeRecordModel {
         this.tradeShare = tradeShare;
     }
 
-    public String getTradeType() {
-        return _tradeType;
-    }
-
     private String _tradeType;
-    public void setTradeType(String tradeType) {
-        if (tradeType.equals(1))
+    public String getTradeType() {
+
+        if (tradeType.equals("1"))
         {
             _tradeType = "认购";
-        }else if (tradeType.equals(2))
+        }else if (tradeType.equals("2"))
         {
             _tradeType = "申购";
-        }else if (tradeType.equals(3))
+        }else if (tradeType.equals("3"))
         {
             _tradeType = "赎回";
         }
+        return _tradeType;
     }
+    public void setTradeType(String tradeType) { this.tradeType = tradeType; }
 
     public String getUnitPrice() {
         return unitPrice;
