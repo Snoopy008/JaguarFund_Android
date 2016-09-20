@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/customerDetail_customerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="#fff46464"
+        android:text="基本信息"/>
+
+    <TextView
+        android:id="@+id/customerDetail_investProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:text="投资列表"/>
+
+    <TextView
+        android:id="@+id/customerDetail_tradeRecords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:text="交易记录"/>
+
+</LinearLayout>
