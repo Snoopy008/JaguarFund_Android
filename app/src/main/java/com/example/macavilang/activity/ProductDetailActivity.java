@@ -1,5 +1,6 @@
 package com.example.macavilang.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import com.example.macavilang.fragment.ProductDetail_productInfo_Fragment;
 import com.example.macavilang.fragment.ProductDetail_tradeRecordsFragment;
 import com.example.macavilang.fragment.ProductFragment;
 import com.example.macavilang.jaguarfund_android.R;
+import com.example.macavilang.model.ProductModel;
 
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -96,6 +98,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initFragment(int index){
+        Intent intent = this.getIntent();
+        ProductModel productModel = (ProductModel)intent.getSerializableExtra("productModel");
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
@@ -103,6 +108,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             case 0:
                 if (ProductDetail_productInfo_Fragment == null){
                     ProductDetail_productInfo_Fragment = new ProductDetail_productInfo_Fragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("productModel",productModel);
+                    ProductDetail_productInfo_Fragment.setArguments(bundle);
                     transaction.add(R.id.prductDetail_content,ProductDetail_productInfo_Fragment);
                 }else {
                     transaction.show(ProductDetail_productInfo_Fragment);
@@ -112,6 +120,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             case 1:
                 if (ProductDetail_netValueHistoryFragment == null){
                     ProductDetail_netValueHistoryFragment = new ProductDetail_netValueHistoryFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("productId",productModel.getId());
+                    ProductDetail_netValueHistoryFragment.setArguments(bundle);
                     transaction.add(R.id.prductDetail_content,ProductDetail_netValueHistoryFragment);
                 }else {
                     transaction.show(ProductDetail_netValueHistoryFragment);
@@ -121,6 +132,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             case 2:
                 if (ProductDetail_inverstCustomersFragment == null){
                     ProductDetail_inverstCustomersFragment = new ProductDetail_inverstCustomersFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("productId",productModel.getId());
+                    ProductDetail_inverstCustomersFragment.setArguments(bundle);
                     transaction.add(R.id.prductDetail_content,ProductDetail_inverstCustomersFragment);
                 }else {
                     transaction.show(ProductDetail_inverstCustomersFragment);
@@ -130,6 +144,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             case 3:
                 if (ProductDetail_tradeRecordsFragment == null){
                     ProductDetail_tradeRecordsFragment = new ProductDetail_tradeRecordsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("productId",productModel.getId());
+                    ProductDetail_tradeRecordsFragment.setArguments(bundle);
                     transaction.add(R.id.prductDetail_content,ProductDetail_tradeRecordsFragment);
                 }else {
                     transaction.show(ProductDetail_tradeRecordsFragment);

@@ -1,5 +1,6 @@
 package com.example.macavilang.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +17,8 @@ import com.example.macavilang.fragment.ProductDetail_netValueHistoryFragment;
 import com.example.macavilang.fragment.ProductDetail_productInfo_Fragment;
 import com.example.macavilang.fragment.ProductDetail_tradeRecordsFragment;
 import com.example.macavilang.jaguarfund_android.R;
+import com.example.macavilang.model.CustomerModel;
+import com.example.macavilang.model.ProductModel;
 
 public class CustomerDetailActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -83,6 +86,8 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
     }
 
     private void initFragment(int index){
+        Intent intent = this.getIntent();
+        CustomerModel customerModel = (CustomerModel) intent.getSerializableExtra("customerModel");
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         hideFragment(transaction);
@@ -90,6 +95,9 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
             case 0:
                 if (CustomerDetail_customerInfoFragment == null){
                     CustomerDetail_customerInfoFragment = new CustomerDetail_customerInfoFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("customerModel",customerModel);
+                    CustomerDetail_customerInfoFragment.setArguments(bundle);
                     transaction.add(R.id.customerDetail_content,CustomerDetail_customerInfoFragment);
                 }else {
                     transaction.show(CustomerDetail_customerInfoFragment);
@@ -99,6 +107,9 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
             case 1:
                 if (CustomerDetail_inverstProductsFragment == null){
                     CustomerDetail_inverstProductsFragment = new CustomerDetail_inverstProductsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("customerId",customerModel.getId());
+                    CustomerDetail_inverstProductsFragment.setArguments(bundle);
                     transaction.add(R.id.customerDetail_content,CustomerDetail_inverstProductsFragment);
                 }else {
                     transaction.show(CustomerDetail_inverstProductsFragment);
@@ -108,6 +119,9 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
             case 2:
                 if (CustomerDetail_tradeRecordsFragment == null){
                     CustomerDetail_tradeRecordsFragment = new CustomerDetail_tradeRecordsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("customerId",customerModel.getId());
+                    CustomerDetail_tradeRecordsFragment.setArguments(bundle);
                     transaction.add(R.id.customerDetail_content,CustomerDetail_tradeRecordsFragment);
                 }else {
                     transaction.show(CustomerDetail_tradeRecordsFragment);

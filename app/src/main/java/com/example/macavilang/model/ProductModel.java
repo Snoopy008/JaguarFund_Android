@@ -246,6 +246,16 @@ public class ProductModel implements Serializable {
     }
 
     public String getStatus() {
+        if (status.equals("1"))
+        {
+            status = "募集";
+        }else if (status.equals("2"))
+        {
+            status = "封闭";
+        }else if (status.equals("3"))
+        {
+            status = "运作";
+        }
         return status;
     }
 

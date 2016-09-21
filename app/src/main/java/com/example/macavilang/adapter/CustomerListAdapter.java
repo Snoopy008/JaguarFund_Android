@@ -22,12 +22,14 @@ public class CustomerListAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private Context ctx;
     private List<CustomerModel> customerList;
+    private Boolean isPartViewRemove = false;
 
-    public CustomerListAdapter(Context context, List<CustomerModel> customers){
+    public CustomerListAdapter(Context context, List<CustomerModel> customers , Boolean removePartView){
         super();
         this.mInflater = LayoutInflater.from(context);
         this.ctx = context;
         this.customerList = customers;
+        isPartViewRemove = removePartView;
     }
 
     @Override
@@ -50,18 +52,24 @@ public class CustomerListAdapter extends BaseAdapter{
         View view1 = view;
         CustomerModel customerModel = customerList.get(i);
         view1 = mInflater.inflate(R.layout.layout_customer_list_item,null);
+        TextView customer_investProductNumber = (TextView) view1.findViewById(R.id.customer_investProductNumber);
+        TextView customer_investProductNumberTitle = (TextView) view1.findViewById(R.id.customer_investProductNumberTitle);
+        if (isPartViewRemove){
+            customer_investProductNumber.setVisibility(View.GONE);
+            customer_investProductNumberTitle.setVisibility(View.GONE);
+        }else {
+
+            customer_investProductNumber.setText(customerModel.getInvestProductCount());
+        }
 
         TextView customer_customerName = (TextView)view1.findViewById(R.id.customer_customerName);
         customer_customerName.setText(customerModel.getName());
 
-        TextView customer_investProductNumber = (TextView) view1.findViewById(R.id.customer_investProductNumber);
-        customer_investProductNumber.setText(customerModel.getInvestProductCount());
-
         TextView customer_investShare = (TextView) view1.findViewById(R.id.customer_investShare);
-        customer_investShare.setText(customerModel.getInvestShareTotal());
+        customer_investShare.setText(customerModel.getInvestShareCurrent());
 
         TextView customer_investAmount = (TextView) view1.findViewById(R.id.customer_investAmount);
-        customer_investAmount.setText(customerModel.getInvestShareAmountTotal());
+        customer_investAmount.setText(customerModel.getInvestShareAmountCurrent());
         return view1;
     }
 }

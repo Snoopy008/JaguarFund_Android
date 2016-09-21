@@ -82,7 +82,7 @@ public class CustomerFragment extends Fragment {
                         final List<CustomerModel> customers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
 
                         ListView customer_listView = (ListView)rootView.findViewById(R.id.customer_listView);
-                        CustomerListAdapter customerListAdapter = new CustomerListAdapter(getContext(),customers);
+                        CustomerListAdapter customerListAdapter = new CustomerListAdapter(getContext(),customers,false);
                         customer_listView.setAdapter(customerListAdapter);
 
                         customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
