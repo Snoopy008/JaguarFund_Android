@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
             android:textSize="18sp"
             android:textColor="#000000"
             android:text="天倪一号"
