@@ -12,6 +12,7 @@ import com.example.macavilang.model.CustomerModel;
 import com.example.macavilang.model.ProductModel;
 import com.example.macavilang.model.TradeRecordModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +25,18 @@ public class CustomerListAdapter extends BaseAdapter{
     private List<CustomerModel> customerList;
     private Boolean isPartViewRemove = false;
 
-    public CustomerListAdapter(Context context, List<CustomerModel> customers , Boolean removePartView){
+    public CustomerListAdapter(Context context, Boolean isRemovePartView){
         super();
         this.mInflater = LayoutInflater.from(context);
         this.ctx = context;
+        customerList = new ArrayList<CustomerModel>();
+        isPartViewRemove = isRemovePartView;
+    }
+
+
+    public void updateCustomerList(List<CustomerModel> customers)
+    {
         this.customerList = customers;
-        isPartViewRemove = removePartView;
     }
 
     @Override

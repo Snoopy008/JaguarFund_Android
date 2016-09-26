@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.android.volley.Response;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.TradeRecordModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +26,20 @@ public class TradeRecordAdapter extends BaseAdapter {
     private Context ctx;
     private List<TradeRecordModel> tradeList;
 
-    public TradeRecordAdapter(Context context, List<TradeRecordModel> trades){
+    public TradeRecordAdapter(Context context){
         super();
         this.mInflater = LayoutInflater.from(context);
         this.ctx = context;
+        tradeList = new ArrayList<TradeRecordModel>();
+    }
+
+
+    public void updatetradeList(List<TradeRecordModel> trades){
         this.tradeList = trades;
     }
+
+
+
 
     @Override
     public int getCount() {
