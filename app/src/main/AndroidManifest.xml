@@ -20,7 +20,9 @@
         <activity android:name="com.example.macavilang.activity.MainPageActivity" />
         <activity android:name="com.example.macavilang.activity.TradeRecordDetailActivity" />
         <activity android:name="com.example.macavilang.activity.TradeRecordListActivity" />
-        <activity android:name="com.example.macavilang.activity.ProductDetailActivity"></activity>
+        <activity android:name="com.example.macavilang.activity.ProductDetailActivity" />
+        <activity android:name="com.example.macavilang.activity.CustomerDetailActivity" />
+        <activity android:name="com.example.macavilang.activity.LoginActivity"></activity>
     </application>
 
 </manifest>
