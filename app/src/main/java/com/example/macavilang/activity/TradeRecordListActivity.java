@@ -67,7 +67,8 @@ public class TradeRecordListActivity extends AppCompatActivity {
                         final List<TradeRecordModel> tradeRecords = (List<TradeRecordModel>) gson.fromJson(tradeRecordJson,tradeRecordListType);
 
                         ListView tradeRecordListView = (ListView)findViewById(R.id.TradeRecordListView);
-                        TradeRecordAdapter tradeRecordAdapter = new TradeRecordAdapter(TradeRecordListActivity.this,tradeRecords);
+                        TradeRecordAdapter tradeRecordAdapter = new TradeRecordAdapter(TradeRecordListActivity.this);
+                        tradeRecordAdapter.updatetradeList(tradeRecords);
                         tradeRecordListView.setAdapter(tradeRecordAdapter);
 
                         tradeRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

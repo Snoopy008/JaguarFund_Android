@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,15 +26,20 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.macavilang.activity.CustomerDetailActivity;
 import com.example.macavilang.activity.ProductDetailActivity;
+import com.example.macavilang.activity.TradeRecordDetailActivity;
 import com.example.macavilang.adapter.CustomerListAdapter;
 import com.example.macavilang.adapter.ProductListAdapter;
+import com.example.macavilang.adapter.TradeRecordAdapter;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.CustomerModel;
 import com.example.macavilang.model.ProductModel;
+import com.example.macavilang.model.TradeRecordModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -46,6 +53,13 @@ public class CustomerFragment extends Fragment {
 
 
     private View rootView;
+    private int currentPage =1;
+    private int totalPage;
+    private SearchView customer_searchView;
+    private PullToRefreshListView customer_listView;
+    private List<CustomerModel> customers;
+    private CustomerListAdapter customerListAdapter;
+
     public CustomerFragment() {
         // Required empty public constructor
     }
@@ -55,17 +69,90 @@ public class CustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_customer,container,false);
-        getCustomerListData();
+        customer_searchView = (SearchView)rootView.findViewById(R.id.customer_searchView);
+        customer_listView = (PullToRefreshListView)rootView.findViewById(R.id.customer_listView);
+        customer_listView.setMode(PullToRefreshBase.Mode.BOTH);
+        customerListAdapter = new CustomerListAdapter(getContext(),false);
+        customer_listView.setAdapter(customerListAdapter);
+        getCustomerListData("",currentPage);
+
+
+
+        //ListView点击行
+        customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CustomerModel customerModel = customers.get(i);
+                Intent intent = new Intent(getContext(),CustomerDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("customerModel",customerModel);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+
+        //SearchView点击搜索
+        customer_searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            // 当点击搜索按钮时触发该方法
+            public boolean onQueryTextSubmit(String s) {
+                currentPage = 1;
+                getCustomerListData(s,currentPage);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
+        customer_listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                //下拉刷新
+                if (customer_listView.isShownHeader()){
+                    currentPage = 1;
+                    if (customer_searchView.toString().equals(null))
+                    {
+                        getCustomerListData("",currentPage);
+                    }else {
+                        getCustomerListData(customer_searchView.getQuery().toString(),currentPage);
+                    }
+
+                    Log.e("-------","refresh");
+                }
+
+                //上拉加载
+                if (customer_listView.isShownFooter()) {
+                    if (currentPage < totalPage) {
+                        ++currentPage;
+                        if (customer_searchView.toString().equals(null))
+                        {
+                            getCustomerListData("",currentPage);
+                        }else {
+                            getCustomerListData(customer_searchView.getQuery().toString(),currentPage);
+                        }
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "没有更多数据",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
         return rootView;
     }
 
 
-    public void getCustomerListData(){
+    public void getCustomerListData(String searchWords, int page){
         RequestQueue customerListQueue = Volley.newRequestQueue(getContext());
         String customerUrl = getResources().getString(R.string.baseURL) + "api/fund/clients";
         Uri.Builder customerBuildUrl = Uri.parse(customerUrl).buildUpon();
-        customerBuildUrl.appendQueryParameter("keyWords","");
-        customerBuildUrl.appendQueryParameter("page","1");
+        customerBuildUrl.appendQueryParameter("keyWords",searchWords);
+        customerBuildUrl.appendQueryParameter("page", String.valueOf(page));
         customerBuildUrl.appendQueryParameter("pageSize","10");
         customerBuildUrl.appendQueryParameter("sort","investShareAmountTotal");
         String customerTotalUrl = customerBuildUrl.build().toString();
@@ -78,24 +165,14 @@ public class CustomerFragment extends Fragment {
                         JsonParser jsonParser = new JsonParser();
                         JsonElement jsonElement = jsonParser.parse(response);
                         JsonElement customerListJson = jsonElement.getAsJsonObject().get("list");
+                        JsonElement totalPageJson = jsonElement.getAsJsonObject().get("totalPage");
+                        totalPage = totalPageJson.getAsInt();
                         Type customerListType = new TypeToken<List<CustomerModel>>(){}.getType();
                         final List<CustomerModel> customers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
 
-                        ListView customer_listView = (ListView)rootView.findViewById(R.id.customer_listView);
-                        CustomerListAdapter customerListAdapter = new CustomerListAdapter(getContext(),customers,false);
-                        customer_listView.setAdapter(customerListAdapter);
-
-                        customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                CustomerModel customerModel = customers.get(i);
-                                Intent intent = new Intent(getContext(),CustomerDetailActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("customerModel",customerModel);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                        });
+                        customerListAdapter.updateCustomerList(customers);
+                        customerListAdapter.notifyDataSetChanged();
+                        customer_listView.onRefreshComplete();
 
                     }
                 }, new Response.ErrorListener() {

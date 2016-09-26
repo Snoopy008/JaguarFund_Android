@@ -82,7 +82,7 @@ public class ProductDetail_inverstCustomersFragment extends Fragment {
                             final List<CustomerModel> customers = (List<CustomerModel>) gson.fromJson(productInverstCustomerListJson,productInverstCustomerListType);
 
                             ListView productInverstCustomer_listView = (ListView)rootView.findViewById(R.id.productInverstCustomersListView);
-                            CustomerListAdapter productInverstCustomerListAdapter = new CustomerListAdapter(getContext(),customers,true);
+                            CustomerListAdapter productInverstCustomerListAdapter = new CustomerListAdapter(getContext(),true);
                             productInverstCustomer_listView.setAdapter(productInverstCustomerListAdapter);
 
 //                            customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

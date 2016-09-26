@@ -85,7 +85,8 @@ public class ProductDetail_tradeRecordsFragment extends Fragment {
                             final List<TradeRecordModel> tradeRecords = (List<TradeRecordModel>) gson.fromJson(productTradeRecordJson,productTradeRecordListType);
 
                             ListView productTradeRecordListView = (ListView)rootView.findViewById(R.id.productTradeRecordListView);
-                            TradeRecordAdapter productTradeRecordAdapter = new TradeRecordAdapter(getContext(),tradeRecords);
+                            TradeRecordAdapter productTradeRecordAdapter = new TradeRecordAdapter(getContext());
+                            productTradeRecordAdapter.updatetradeList(tradeRecords);
                             productTradeRecordListView.setAdapter(productTradeRecordAdapter);
 
                             productTradeRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
