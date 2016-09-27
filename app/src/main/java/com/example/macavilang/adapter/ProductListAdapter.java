@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.ProductModel;
-import com.example.macavilang.model.TradeRecordModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,12 +22,14 @@ public class ProductListAdapter extends BaseAdapter {
     private Context ctx;
     private List<ProductModel> productList;
 
-    public ProductListAdapter(Context context, List<ProductModel> products){
+    public ProductListAdapter(Context context){
         super();
         this.mInflater = LayoutInflater.from(context);
         this.ctx = context;
-        this.productList = products;
+        this.productList = new ArrayList<ProductModel>();
     }
+
+    public void updateProductList(List<ProductModel> products){this.productList = products;}
 
     @Override
     public int getCount() {
@@ -54,7 +56,7 @@ public class ProductListAdapter extends BaseAdapter {
         product_perNetValueText.setText(productModel.getLatestNetValueView());
 
         TextView product_productName = (TextView) view1.findViewById(R.id.product_productName);
-        product_productName.setText(productModel.getFundName());
+        product_productName.setText(productModel.getProductName());
 
         TextView product_investPeople = (TextView) view1.findViewById(R.id.product_investPeople);
         product_investPeople.setText(productModel.getFundCurrentOwnerNumber());

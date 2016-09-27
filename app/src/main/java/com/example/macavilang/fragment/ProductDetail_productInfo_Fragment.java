@@ -3,7 +3,6 @@ package com.example.macavilang.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class ProductDetail_productInfo_Fragment extends Fragment {
             ProductModel productModel = (ProductModel)bundle.getSerializable("productModel");
 
             TextView productDetail_productInfo_fundName = (TextView)rootView.findViewById(R.id.productDetail_productInfo_fundName);
-            productDetail_productInfo_fundName.setText(productModel.getFundName());
+            productDetail_productInfo_fundName.setText(productModel.getProductName());
 
             TextView productDetail_productInfo_fundNumber = (TextView)rootView.findViewById(R.id.productDetail_productInfo_fundNumber);
             productDetail_productInfo_fundNumber.setText(productModel.getFundCode());

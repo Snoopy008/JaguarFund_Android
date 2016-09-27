@@ -7,16 +7,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,7 +32,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.lang.reflect.Type;
@@ -70,7 +66,7 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
         customerTradeRecordListView.setMode(PullToRefreshBase.Mode.BOTH);
         customerTradeRecordAdapter = new TradeRecordAdapter(getContext());
         customerTradeRecordListView.setAdapter(customerTradeRecordAdapter);
-        getCustomerTradeRecordsData("",currentPage);
+        getCustomerTradeRecordsData("",currentPage,false);
 
 
 
@@ -93,7 +89,7 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
             // 当点击搜索按钮时触发该方法
             public boolean onQueryTextSubmit(String s) {
                 currentPage = 1;
-                getCustomerTradeRecordsData(s,currentPage);
+                getCustomerTradeRecordsData(s,currentPage,false);
                 return false;
             }
 
@@ -113,9 +109,9 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
                     currentPage = 1;
                     if (customerTradeRecordSearchView.toString().equals(null))
                     {
-                        getCustomerTradeRecordsData("",currentPage);
+                        getCustomerTradeRecordsData("",currentPage,false);
                     }else {
-                        getCustomerTradeRecordsData(customerTradeRecordSearchView.getQuery().toString(),currentPage);
+                        getCustomerTradeRecordsData(customerTradeRecordSearchView.getQuery().toString(),currentPage,false);
                     }
 
                     Log.e("-------","refresh");
@@ -127,9 +123,9 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
                         ++currentPage;
                         if (customerTradeRecordSearchView.toString().equals(null))
                         {
-                            getCustomerTradeRecordsData("",currentPage);
+                            getCustomerTradeRecordsData("",currentPage,true);
                         }else {
-                            getCustomerTradeRecordsData(customerTradeRecordSearchView.getQuery().toString(),currentPage);
+                            getCustomerTradeRecordsData(customerTradeRecordSearchView.getQuery().toString(),currentPage,true);
                         }
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "没有更多数据",
@@ -143,7 +139,7 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
     }
 
 
-    public void getCustomerTradeRecordsData(String searchWords, int page){
+    public void getCustomerTradeRecordsData(String searchWords, int page, final Boolean isLoad){
         Bundle bundle = getArguments();
         if (bundle != null) {
             String customerId = bundle.getString("customerId");
@@ -167,10 +163,13 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
                             JsonElement customerTradeRecordJson = jsonElement.getAsJsonObject().get("list");
                             JsonElement totalPageJson = jsonElement.getAsJsonObject().get("totalPage");
                             totalPage = totalPageJson.getAsInt();
-
                             Type customerTradeRecordListType = new TypeToken<List<TradeRecordModel>>(){}.getType();
-                            tradeRecords = (List<TradeRecordModel>) gson.fromJson(customerTradeRecordJson,customerTradeRecordListType);
-
+                            if (isLoad){
+                                List<TradeRecordModel> moreTradeRecords = (List<TradeRecordModel>) gson.fromJson(customerTradeRecordJson,customerTradeRecordListType);
+                                tradeRecords.addAll(moreTradeRecords);
+                            }else {
+                                tradeRecords = (List<TradeRecordModel>) gson.fromJson(customerTradeRecordJson,customerTradeRecordListType);
+                            }
                             customerTradeRecordAdapter.updatetradeList(tradeRecords);
                             customerTradeRecordAdapter.notifyDataSetChanged();
                             customerTradeRecordListView.onRefreshComplete();

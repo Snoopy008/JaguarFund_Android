@@ -32,7 +32,7 @@ public class CustomerDetail_customerInfoFragment extends Fragment {
             CustomerModel customerModel = (CustomerModel)bundle.getSerializable("customerModel");
 
             TextView customerDetail_customerInfo_customerName = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_customerName);
-            customerDetail_customerInfo_customerName.setText(customerModel.getName());
+            customerDetail_customerInfo_customerName.setText(customerModel.getClientName());
 
             TextView customerDetail_customerInfo_customerType = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_customerType);
             customerDetail_customerInfo_customerType.setText(customerModel.getCustomerType());

@@ -74,7 +74,7 @@ public class CustomerFragment extends Fragment {
         customer_listView.setMode(PullToRefreshBase.Mode.BOTH);
         customerListAdapter = new CustomerListAdapter(getContext(),false);
         customer_listView.setAdapter(customerListAdapter);
-        getCustomerListData("",currentPage);
+        getCustomerListData("",currentPage,false);
 
 
 
@@ -98,7 +98,7 @@ public class CustomerFragment extends Fragment {
             // 当点击搜索按钮时触发该方法
             public boolean onQueryTextSubmit(String s) {
                 currentPage = 1;
-                getCustomerListData(s,currentPage);
+                getCustomerListData(s,currentPage,false);
                 return false;
             }
 
@@ -118,12 +118,10 @@ public class CustomerFragment extends Fragment {
                     currentPage = 1;
                     if (customer_searchView.toString().equals(null))
                     {
-                        getCustomerListData("",currentPage);
+                        getCustomerListData("",currentPage,false);
                     }else {
-                        getCustomerListData(customer_searchView.getQuery().toString(),currentPage);
+                        getCustomerListData(customer_searchView.getQuery().toString(),currentPage,false);
                     }
-
-                    Log.e("-------","refresh");
                 }
 
                 //上拉加载
@@ -132,13 +130,14 @@ public class CustomerFragment extends Fragment {
                         ++currentPage;
                         if (customer_searchView.toString().equals(null))
                         {
-                            getCustomerListData("",currentPage);
+                            getCustomerListData("",currentPage,true);
                         }else {
-                            getCustomerListData(customer_searchView.getQuery().toString(),currentPage);
+                            getCustomerListData(customer_searchView.getQuery().toString(),currentPage,true);
                         }
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "没有更多数据",
                                 Toast.LENGTH_SHORT).show();
+                        customer_listView.onRefreshComplete();
                     }
                 }
             }
@@ -146,8 +145,7 @@ public class CustomerFragment extends Fragment {
         return rootView;
     }
 
-
-    public void getCustomerListData(String searchWords, int page){
+    public void getCustomerListData(String searchWords, int page, final Boolean isLoad){
         RequestQueue customerListQueue = Volley.newRequestQueue(getContext());
         String customerUrl = getResources().getString(R.string.baseURL) + "api/fund/clients";
         Uri.Builder customerBuildUrl = Uri.parse(customerUrl).buildUpon();
@@ -168,7 +166,13 @@ public class CustomerFragment extends Fragment {
                         JsonElement totalPageJson = jsonElement.getAsJsonObject().get("totalPage");
                         totalPage = totalPageJson.getAsInt();
                         Type customerListType = new TypeToken<List<CustomerModel>>(){}.getType();
-                        final List<CustomerModel> customers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
+                        if (isLoad){
+                           List<CustomerModel> moreCustomers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
+                            customers.addAll(moreCustomers);
+                        }else {
+                            customers = (List<CustomerModel>) gson.fromJson(customerListJson,customerListType);
+                        }
+
 
                         customerListAdapter.updateCustomerList(customers);
                         customerListAdapter.notifyDataSetChanged();

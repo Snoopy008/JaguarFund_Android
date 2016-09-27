@@ -7,8 +7,8 @@ import java.io.Serializable;
  */
 public class ProductModel implements Serializable {
     String id;
-    String fundName;
-    String fundShortName;
+    String productName;
+    String productShortName;
     String fundCode;
     String bizCode;
     String custodian;
@@ -53,20 +53,20 @@ public class ProductModel implements Serializable {
         this.id = id;
     }
 
-    public String getFundName() {
-        return fundName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getFundShortName() {
-        return fundShortName;
+    public String getProductShortName() {
+        return productShortName;
     }
 
-    public void setFundShortName(String fundShortName) {
-        this.fundShortName = fundShortName;
+    public void setProductShortName(String productShortName) {
+        this.productShortName = productShortName;
     }
 
     public String getFundCode() {

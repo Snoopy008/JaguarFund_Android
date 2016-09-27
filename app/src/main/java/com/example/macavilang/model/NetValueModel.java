@@ -6,6 +6,7 @@ package com.example.macavilang.model;
 public class NetValueModel {
     String productId;
     String productName;
+    String productShortName;
     String latestMarketDate;
     String latestMarketPrice;
     String latestAccumulativeMarketPrice;
@@ -13,6 +14,13 @@ public class NetValueModel {
     String previousMarketPrice;
     String previousAccumulativeMarketPrice;
 
+    public String getProductShortName() {
+        return productShortName;
+    }
+
+    public void setProductShortName(String productShortName) {
+        this.productShortName = productShortName;
+    }
 
     public String getProductId() {
         return productId;

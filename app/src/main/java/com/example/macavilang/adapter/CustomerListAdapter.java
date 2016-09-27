@@ -70,7 +70,7 @@ public class CustomerListAdapter extends BaseAdapter{
         }
 
         TextView customer_customerName = (TextView)view1.findViewById(R.id.customer_customerName);
-        customer_customerName.setText(customerModel.getName());
+        customer_customerName.setText(customerModel.getClientName());
 
         TextView customer_investShare = (TextView) view1.findViewById(R.id.customer_investShare);
         customer_investShare.setText(customerModel.getInvestShareCurrent());

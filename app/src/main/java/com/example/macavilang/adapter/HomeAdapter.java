@@ -98,7 +98,7 @@ public class HomeAdapter extends BaseAdapter {
             view1 = mInflater.inflate(R.layout.layout_net_value_rencent_data_list_item,null);
 
             TextView productNameText = (TextView) view1.findViewById(R.id.productName);
-            productNameText.setText(netValueModel.getProductName());
+            productNameText.setText(netValueModel.getProductShortName());
 
             TextView perNetValueText = (TextView) view1.findViewById(R.id.prouctPerNetValue);
             perNetValueText.setText("单位净值:" + netValueModel.getLatestMarketPrice() + "元");

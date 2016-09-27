@@ -4,23 +4,78 @@ package com.example.macavilang.model;
  * Created by macavilang on 16/9/7.
  */
 public class TradeRecordModel {
-    String bankAccount;
-    String bankName;
-    String clientAddress;
-    String clientId;
-    String clientMobile;
-    String clientName;
-    String contractNo;
-    String fundTradePurchaseHistoryId;
     String id;
-    String productId;
-    String productName;
-    String tradeAmount;
-    String tradeDate;
-    String tradeShare;
+    String customerType;
     String tradeType;
+    String fundTradePurchaseHistoryId;
+    String contractNo;
+    String tradeDate;
+    String tradeAmount;
+    String tradeShare;
+    String bankName;
+    String bankAccount;
     String unitPrice;
     String unitPriceView;
+    String clientMobile;
+    String clientAddress;
+    String tradeRemark;
+    String companyId;
+    String productName;
+    String productShortName;
+    String clientName;
+    String clientId;
+    String productId;
+    String status;
+    String clientFundShareCurrent;
+
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    public String getTradeRemark() {
+        return tradeRemark;
+    }
+
+    public void setTradeRemark(String tradeRemark) {
+        this.tradeRemark = tradeRemark;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getProductShortName() {
+        return productShortName;
+    }
+
+    public void setProductShortName(String productShortName) {
+        this.productShortName = productShortName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getClientFundShareCurrent() {
+        return clientFundShareCurrent;
+    }
+
+    public void setClientFundShareCurrent(String clientFundShareCurrent) {
+        this.clientFundShareCurrent = clientFundShareCurrent;
+    }
 
     private String _tradeRecordStr;
     public String getTradeRecordStr() {

@@ -96,7 +96,7 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         TextView addressText = (TextView)findViewById(R.id.address);
         addressText.setText(model.getAddress());
 
-        TextView fundNameText = (TextView)findViewById(R.id.fundName);
+        TextView fundNameText = (TextView)findViewById(R.id.productName);
         fundNameText.setText(model.getFundName());
 
         TextView fundNumberText = (TextView)findViewById(R.id.fundNumber);

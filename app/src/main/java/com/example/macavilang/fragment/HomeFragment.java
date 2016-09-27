@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment {
                     Gson gson = new Gson();
                     @Override
                     public void onResponse(String response) {
-                        Log.e("rememberMessageRequest",response);
+                        Log.e("HomeRememberMessage",response);
                         JsonParser jsonParser = new JsonParser();
                         JsonElement jsonElement = jsonParser.parse(response);
                         JsonElement birthdayJson = jsonElement.getAsJsonObject().get("birthdayList");
@@ -176,6 +176,7 @@ public class HomeFragment extends Fragment {
                     Gson gson = new Gson();
             @Override
             public void onResponse(String response) {
+                Log.e("HomeNetValue",response);
                 Type netValueListType = new TypeToken<List<NetValueModel>>(){}.getType();
                 netValues = (List<NetValueModel>) gson.fromJson(response,netValueListType);
                 mainList.add("净值");
@@ -217,7 +218,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(String response) {
 
-                Log.e("tradeRecordError",response);
+                Log.e("HomeTradeRecord",response);
                 JsonParser jsonParser = new JsonParser();
                 JsonElement jsonElement = jsonParser.parse(response);
                 JsonElement tradeRecordJson = jsonElement.getAsJsonObject().get("list");

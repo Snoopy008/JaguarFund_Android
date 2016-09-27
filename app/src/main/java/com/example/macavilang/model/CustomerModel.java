@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class CustomerModel implements Serializable {
     String id;
-    String name;
+    String clientName;
     String mobile;
     String address;
     String investProductCount;
@@ -21,6 +21,14 @@ public class CustomerModel implements Serializable {
     String customerType;
     String customerTypeView;
 
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
     public String getId() {
         return id;
     }
@@ -29,13 +37,6 @@ public class CustomerModel implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getMobile() {
         return mobile;
