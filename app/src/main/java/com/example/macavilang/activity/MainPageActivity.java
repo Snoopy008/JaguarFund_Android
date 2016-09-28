@@ -18,6 +18,7 @@ import com.example.macavilang.fragment.ProductFragment;
 import com.example.macavilang.jaguarfund_android.R;
 
 
+
 public class MainPageActivity extends FragmentActivity implements View.OnClickListener{
     private LinearLayout ll_home;
     private LinearLayout ll_product;
@@ -40,10 +41,14 @@ public class MainPageActivity extends FragmentActivity implements View.OnClickLi
     private Fragment customerFragment;
     private Fragment myFragment;
 
+    private TextView toptitle;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+
+        toptitle = (TextView)findViewById(R.id.pageTopTitle);
 
         initView();
 
@@ -62,8 +67,10 @@ public class MainPageActivity extends FragmentActivity implements View.OnClickLi
             case 0:
                 if (homeFragment == null){
                     homeFragment = new HomeFragment();
+                    toptitle.setText("首页");
                     transaction.add(R.id.vp_content,homeFragment);
                 }else {
+                    toptitle.setText("首页");
                     transaction.show(homeFragment);
                 }
                 break;
@@ -71,8 +78,10 @@ public class MainPageActivity extends FragmentActivity implements View.OnClickLi
             case 1:
                 if (productFragment == null){
                     productFragment = new ProductFragment();
+                    toptitle.setText("产品列表");
                     transaction.add(R.id.vp_content,productFragment);
                 }else {
+                    toptitle.setText("产品列表");
                     transaction.show(productFragment);
                 }
                 break;
@@ -80,8 +89,10 @@ public class MainPageActivity extends FragmentActivity implements View.OnClickLi
             case 2:
                 if (customerFragment == null){
                     customerFragment = new CustomerFragment();
+                    toptitle.setText("客户列表");
                     transaction.add(R.id.vp_content,customerFragment);
                 }else {
+                    toptitle.setText("客户列表");
                     transaction.show(customerFragment);
                 }
                 break;
@@ -89,8 +100,10 @@ public class MainPageActivity extends FragmentActivity implements View.OnClickLi
             case 3:
                 if (myFragment == null){
                     myFragment = new MyFragment();
+                    toptitle.setText("我的");
                     transaction.add(R.id.vp_content,myFragment);
                 }else {
+                    toptitle.setText("我的");
                     transaction.show(myFragment);
                 }
                 break;

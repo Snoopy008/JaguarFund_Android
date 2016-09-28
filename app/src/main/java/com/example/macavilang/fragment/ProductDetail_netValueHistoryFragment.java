@@ -2,7 +2,6 @@ package com.example.macavilang.fragment;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,13 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.macavilang.activity.TradeRecordDetailActivity;
 import com.example.macavilang.adapter.ProductNetValueListAdapter;
-import com.example.macavilang.adapter.TradeRecordAdapter;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.ProductNetValueHistoryModel;
 import com.example.macavilang.model.ProductNetValuePercentModel;
-import com.example.macavilang.model.TradeRecordModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

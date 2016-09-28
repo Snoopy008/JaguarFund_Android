@@ -11,7 +11,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:padding="8dp"
+        android:padding="6dp"
         android:textColor="#fff46464"
         android:text="基本信息"/>
 
@@ -22,7 +22,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:padding="8dp"
+        android:padding="6dp"
         android:textColor="#000000"
         android:text="净值历史"/>
 
@@ -33,7 +33,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:padding="8dp"
+        android:padding="6dp"
         android:textColor="#000000"
         android:text="投资客户"/>
 
@@ -44,7 +44,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:layout_weight="1"
         android:textSize="20sp"
-        android:padding="8dp"
+        android:padding="6dp"
         android:textColor="#000000"
         android:text="交易记录"/>
 

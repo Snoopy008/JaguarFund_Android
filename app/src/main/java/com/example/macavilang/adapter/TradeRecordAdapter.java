@@ -1,16 +1,12 @@
 package com.example.macavilang.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Response;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.TradeRecordModel;
 

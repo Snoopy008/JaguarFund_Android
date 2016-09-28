@@ -9,12 +9,12 @@ public class TradeRecordDetailModel {
     String productId;
     String clientName;
     String customerType;
-    String mobile;
+    String clientMobile;
     String pidType;
     String pid;
-    String address;
+    String clientAddress;
     String clientRemark;
-    String fundName;
+    String productName;
     String fundCode;
     String contractNo;
     String tradeType;
@@ -76,12 +76,12 @@ public class TradeRecordDetailModel {
         this.customerType = customerType;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getClientMobile() {
+        return clientMobile;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setClientMobile(String clientMobile) {
+        this.clientMobile = clientMobile;
     }
 
     public String getPidType() {
@@ -110,12 +110,12 @@ public class TradeRecordDetailModel {
         this.pid = pid;
     }
 
-    public String getAddress() {
-        return address;
+    public String getClientAddress() {
+        return clientAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setClientAddress(String clientAddress) {
+        this.clientAddress = clientAddress;
     }
 
     public String getClientRemark() {
@@ -126,12 +126,12 @@ public class TradeRecordDetailModel {
         this.clientRemark = clientRemark;
     }
 
-    public String getFundName() {
-        return fundName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getFundCode() {

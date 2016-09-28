@@ -7,18 +7,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.macavilang.fragment.CustomerDetail_customerInfoFragment;
 import com.example.macavilang.fragment.CustomerDetail_inverstProductsFragment;
 import com.example.macavilang.fragment.CustomerDetail_tradeRecordsFragment;
-import com.example.macavilang.fragment.ProductDetail_inverstCustomersFragment;
-import com.example.macavilang.fragment.ProductDetail_netValueHistoryFragment;
-import com.example.macavilang.fragment.ProductDetail_productInfo_Fragment;
-import com.example.macavilang.fragment.ProductDetail_tradeRecordsFragment;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.CustomerModel;
-import com.example.macavilang.model.ProductModel;
+
 
 public class CustomerDetailActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,6 +33,18 @@ public class CustomerDetailActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_detail);
+        TextView titleText = (TextView)findViewById(R.id.title_text);
+        titleText.setText("客户详情");
+        ImageButton backBtn = (ImageButton)findViewById(R.id.backButton);
+
+        backBtn.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         initView();
         initEvent();
         initFragment(0);

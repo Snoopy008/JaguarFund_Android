@@ -3,6 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <include layout="@layout/layout_main_page_top"/>
+
     <TableLayout
         android:padding="20dp"
         android:layout_width="match_parent"

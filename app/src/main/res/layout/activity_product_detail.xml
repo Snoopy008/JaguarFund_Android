@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/layout_custom_actionbar"/>
+
     <include layout="@layout/layout_product_detail_top_tabbar"/>
 
     <FrameLayout

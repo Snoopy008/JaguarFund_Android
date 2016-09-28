@@ -1,5 +1,6 @@
 package com.example.macavilang.activity;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,13 +29,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText account;
     private EditText password;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         account = (EditText)findViewById(R.id.account);
         password = (EditText)findViewById(R.id.password);
+
+        TextView toptitle = (TextView)findViewById(R.id.pageTopTitle);
+        toptitle.setText("登录");
+
     }
+
 
 
     public void loginIn(View source){

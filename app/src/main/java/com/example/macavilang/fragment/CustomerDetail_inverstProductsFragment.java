@@ -3,7 +3,6 @@ package com.example.macavilang.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,10 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.macavilang.adapter.CustomerInverstProductListAdapter;
-import com.example.macavilang.adapter.CustomerListAdapter;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.CustomerInverstProductModel;
-import com.example.macavilang.model.CustomerModel;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

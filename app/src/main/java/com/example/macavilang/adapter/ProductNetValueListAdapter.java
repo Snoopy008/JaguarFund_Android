@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.macavilang.jaguarfund_android.R;
-import com.example.macavilang.model.ProductModel;
 import com.example.macavilang.model.ProductNetValueHistoryModel;
 
 import java.util.List;

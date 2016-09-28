@@ -15,7 +15,6 @@ import com.example.macavilang.model.NetValueModel;
 import com.example.macavilang.model.RememberMessageModel;
 import com.example.macavilang.model.TradeRecordModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

@@ -16,15 +16,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.macavilang.jaguarfund_android.R;
-import com.example.macavilang.model.NetValueModel;
 import com.example.macavilang.model.TradeRecordDetailModel;
-import com.example.macavilang.model.TradeRecordModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TradeRecordDetailActivity extends AppCompatActivity {
@@ -50,6 +47,7 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
                     Gson gson = new Gson();
                     @Override
                     public void onResponse(String response) {
+                        Log.e("TradeRecordDetail",response);
                         Type tradeRecordDetailType = new TypeToken<TradeRecordDetailModel>(){}.getType();
                         TradeRecordDetailModel tradeRecordModel = (TradeRecordDetailModel) gson.fromJson(response,tradeRecordDetailType);
                         setActivityTextViewText(tradeRecordModel);
@@ -85,19 +83,19 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         taCodeText.setText(model.getTacode());
 
         TextView telephoneText = (TextView)findViewById(R.id.telephone);
-        telephoneText.setText(model.getMobile());
+        telephoneText.setText(model.getClientMobile());
 
-        TextView identityTypeText = (TextView)findViewById(R.id.identityType);
-        identityTypeText.setText(model.getPidType());
+//        TextView identityTypeText = (TextView)findViewById(R.id.identityType);
+//        identityTypeText.setText(model.getPidType());
 
         TextView identityNumberText = (TextView)findViewById(R.id.identityNumber);
         identityNumberText.setText(model.getPid());
 
         TextView addressText = (TextView)findViewById(R.id.address);
-        addressText.setText(model.getAddress());
+        addressText.setText(model.getClientAddress());
 
         TextView fundNameText = (TextView)findViewById(R.id.productName);
-        fundNameText.setText(model.getFundName());
+        fundNameText.setText(model.getProductName());
 
         TextView fundNumberText = (TextView)findViewById(R.id.fundNumber);
         fundNumberText.setText(model.getFundCode());

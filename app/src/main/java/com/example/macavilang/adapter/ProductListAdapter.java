@@ -56,7 +56,7 @@ public class ProductListAdapter extends BaseAdapter {
         product_perNetValueText.setText(productModel.getLatestNetValueView());
 
         TextView product_productName = (TextView) view1.findViewById(R.id.product_productName);
-        product_productName.setText(productModel.getProductName());
+        product_productName.setText(productModel.getProductShortName());
 
         TextView product_investPeople = (TextView) view1.findViewById(R.id.product_investPeople);
         product_investPeople.setText(productModel.getFundCurrentOwnerNumber());

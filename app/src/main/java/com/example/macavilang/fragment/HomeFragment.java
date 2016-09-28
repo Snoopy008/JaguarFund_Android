@@ -1,9 +1,6 @@
 package com.example.macavilang.fragment;
 
 
-import android.annotation.SuppressLint;
-import android.app.DownloadManager;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.macavilang.activity.TradeRecordDetailActivity;
@@ -39,11 +34,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,20 +61,23 @@ public class HomeFragment extends Fragment {
     private List<TradeRecordModel> tradeRecords = new ArrayList<>();
     private List<NetValueModel> netValues = new ArrayList<>();
     private ArrayList<Object> mainList= new ArrayList<>();
-
     private HomeAdapter home_adapter;
+    private PullToRefreshListView homelistView;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_home,container,false);
-        ListView homelistView = (ListView) rootView.findViewById(R.id.homeListView);
+        homeQueue = Volley.newRequestQueue(getContext());
+        homelistView = (PullToRefreshListView) rootView.findViewById(R.id.homeListView);
+
+
         preferences = getActivity().getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
         urlToken = preferences.getString("token",null);
-        homeQueue = Volley.newRequestQueue(getContext());
-        getRecentTradeRecordData();
         home_adapter = new HomeAdapter(getContext(),mainList);
         homelistView.setAdapter(home_adapter);
+        getRecentTradeRecordData();
+
         homelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,6 +89,19 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("tradeRecordId",tradeRecordModel.getId());
                     startActivity(intent);
 
+                }
+            }
+        });
+
+
+        homelistView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+                //下拉刷新
+                if (homelistView.isShownHeader()){
+
+                    getRecentTradeRecordData();
+                    Log.e("-------","refresh");
                 }
             }
         });
@@ -151,6 +160,7 @@ public class HomeFragment extends Fragment {
 
                         home_adapter.setAllItemList(mainList);
                         home_adapter.notifyDataSetChanged();
+                        homelistView.onRefreshComplete();
                     }
                 }, new Response.ErrorListener() {
             @Override

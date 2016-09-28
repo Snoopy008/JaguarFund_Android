@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.CustomerModel;
-import com.example.macavilang.model.ProductModel;
 
 /**
  * A simple {@link Fragment} subclass.

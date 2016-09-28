@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,7 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.macavilang.activity.TradeRecordDetailActivity;
-import com.example.macavilang.activity.TradeRecordListActivity;
 import com.example.macavilang.adapter.TradeRecordAdapter;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.TradeRecordModel;
