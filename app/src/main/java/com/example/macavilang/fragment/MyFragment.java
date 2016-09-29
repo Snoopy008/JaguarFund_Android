@@ -2,6 +2,7 @@ package com.example.macavilang.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.macavilang.activity.LoginActivity;
 import com.example.macavilang.jaguarfund_android.R;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class MyFragment extends Fragment {
     private List<String> aList = new ArrayList<String>();
     private List<String> bList = new ArrayList<String>();
     private ListView listView;
+    private SharedPreferences preferences;
 
 
 
@@ -41,8 +44,8 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_my,container,false);
-        SharedPreferences preferences = getActivity().getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
         listView = (ListView) rootView.findViewById(R.id.myListView);
+        preferences = getActivity().getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
         TextView accountTV = (TextView) rootView.findViewById(R.id.accountName);
         accountTV.setText(preferences.getString("displayName",null));
         TextView userNameTV = (TextView) rootView.findViewById(R.id.userName);
@@ -53,7 +56,17 @@ public class MyFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(list.get(i));
+                if (list.get(i).equals("清除缓存"))
+                {
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.clear();
+                    editor.commit();
+
+                    Intent intent = new Intent(getContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
         return rootView;

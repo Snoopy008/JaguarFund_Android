@@ -1,10 +1,12 @@
 package com.example.macavilang.fragment;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -38,6 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,14 +65,14 @@ public class HomeFragment extends Fragment {
     private List<NetValueModel> netValues = new ArrayList<>();
     private ArrayList<Object> mainList= new ArrayList<>();
     private HomeAdapter home_adapter;
-    private PullToRefreshListView homelistView;
+    private ListView homelistView;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_home,container,false);
         homeQueue = Volley.newRequestQueue(getContext());
-        homelistView = (PullToRefreshListView) rootView.findViewById(R.id.homeListView);
+        homelistView = (ListView) rootView.findViewById(R.id.homeListView);
 
 
         preferences = getActivity().getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
@@ -89,19 +92,6 @@ public class HomeFragment extends Fragment {
                     intent.putExtra("tradeRecordId",tradeRecordModel.getId());
                     startActivity(intent);
 
-                }
-            }
-        });
-
-
-        homelistView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                //下拉刷新
-                if (homelistView.isShownHeader()){
-
-                    getRecentTradeRecordData();
-                    Log.e("-------","refresh");
                 }
             }
         });
@@ -135,6 +125,7 @@ public class HomeFragment extends Fragment {
                         mainList.add("事件提醒");
                         for (BirthdayMessageModel model:birthdays) {
                             RememberMessageModel messageModel = new RememberMessageModel();
+
                             messageModel.setRememberMessageStr(model.getBirthdayMessageStr());
                             mainList.add(messageModel);
                         }
@@ -143,9 +134,13 @@ public class HomeFragment extends Fragment {
                         Type openDayListType = new TypeToken<List<OpenDayMessageModel>>(){}.getType();
                         List<OpenDayMessageModel> openDays = (List<OpenDayMessageModel>) gson.fromJson(openDayJson,openDayListType);
                         for (OpenDayMessageModel model:openDays) {
-                            RememberMessageModel messageModel = new RememberMessageModel();
-                            messageModel.setRememberMessageStr(model.getOpenDayMessageStr());
-                            mainList.add(messageModel);
+//                            if (isRangeOfThreeDays(model.getOpenDay()))
+                            {
+                                RememberMessageModel messageModel = new RememberMessageModel();
+                                messageModel.setRememberMessageStr(model.getOpenDayMessageStr());
+                                mainList.add(messageModel);
+                            }
+
                         }
 
                         JsonElement warningPriceJson = jsonElement.getAsJsonObject().get("warningPriceList");
@@ -157,10 +152,8 @@ public class HomeFragment extends Fragment {
                             mainList.add(messageModel);
                         }
 
-
                         home_adapter.setAllItemList(mainList);
                         home_adapter.notifyDataSetChanged();
-                        homelistView.onRefreshComplete();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -256,6 +249,35 @@ public class HomeFragment extends Fragment {
             }
         };
         homeQueue.add(tradeRecordRequest);
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public Boolean isRangeOfThreeDays(String dateStr){
+
+
+        Date nowDate = new Date();
+        long nowTime = nowDate.getTime();
+
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date getDate = null;
+
+        try {
+            getDate = format.parse(dateStr);
+            long getTime = getDate.getTime();
+            long threeDayFromNowTime = nowTime + (1000 * 60 * 60 * 24)*3;
+            if (getTime >= nowTime && getTime <= threeDayFromNowTime){
+                return true;
+            }else {
+                return false;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
 
