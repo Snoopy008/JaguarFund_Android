@@ -7,8 +7,10 @@
     <include layout="@layout/layout_custom_actionbar"/>
 
     <ScrollView
+        android:id="@+id/tradeRecordFileScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
         android:scrollbars="vertical">
 
 
@@ -551,7 +553,7 @@
                 android:layout_height="1dp"
                 android:background="#c9c8c8"/>
 
-            <ListView
+            <com.example.macavilang.utils.ListViewForScrollView
                 android:id="@+id/tradeRecordDetailFileList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

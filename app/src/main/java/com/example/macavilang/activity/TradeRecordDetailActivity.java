@@ -1,15 +1,20 @@
 package com.example.macavilang.activity;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -23,11 +28,19 @@ import com.example.macavilang.adapter.AttachmentFileListAdapter;
 import com.example.macavilang.jaguarfund_android.R;
 import com.example.macavilang.model.AttachmentFileModel;
 import com.example.macavilang.model.TradeRecordDetailModel;
+import com.example.macavilang.utils.ListViewForScrollView;
+import com.example.macavilang.utils.OpenFiles;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +50,8 @@ import java.util.Map;
 public class TradeRecordDetailActivity extends AppCompatActivity {
 
     private ArrayList<Object> fileMainList= new ArrayList<>();
+    private ListViewForScrollView fileListView;
+    private AttachmentFileListAdapter fileListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +74,20 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         getTradeRecordDetailData();
         getAttachmentListData();
 
+
+        fileListAdapter = new AttachmentFileListAdapter(this);
+        fileListView = (ListViewForScrollView)findViewById(R.id.tradeRecordDetailFileList);
+        fileListView.setAdapter(fileListAdapter);
+
+
+        fileListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AttachmentFileModel fileModel = (AttachmentFileModel)fileMainList.get(position);
+                openFileAndReview(fileModel);
+            }
+        });
+
     }
 
 
@@ -74,21 +103,20 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.e("TradeRecordDetailFile--",response);
-//                        JsonParser jsonParser = new JsonParser();
-//                        JsonElement jsonElement = jsonParser.parse(response);
                         Type tradeRecordDetailFileType = new TypeToken<List<AttachmentFileModel>>(){}.getType();
                         List<AttachmentFileModel> fileModels = (List<AttachmentFileModel>) gson.fromJson(response,tradeRecordDetailFileType);
 
                         fileMainList.add("附件");
                         fileMainList.addAll(fileModels);
-                        ListView fileListView = (ListView)findViewById(R.id.tradeRecordDetailFileList);
-                        AttachmentFileListAdapter fileListAdapter = new AttachmentFileListAdapter(TradeRecordDetailActivity.this,fileMainList);
-                        fileListView.setAdapter(fileListAdapter);
+                        fileListAdapter.updatefileList(fileMainList);
+                        fileListAdapter.notifyDataSetChanged();
+                        ScrollView sv = (ScrollView) findViewById(R.id.tradeRecordFileScrollView);
+                        sv.smoothScrollTo(0, 0);
+                        for (AttachmentFileModel file:fileModels) {
+                            downloadFileData(file);
+                        }
 
 
-//                        for (AttachmentFileModel file:fileModels) {
-//                            downloadFileData(file);
-//                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -109,25 +137,25 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
     }
 
 
-    public void downloadFileData(AttachmentFileModel fileModel){
-        RequestQueue downloadFileQueue = Volley.newRequestQueue(this);
-        SharedPreferences preferences = getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
-        String urlToken = preferences.getString("token",null);
-        String tradeRecordDetailFileURL = getResources().getString(R.string.baseURL) + fileModel.getAccessUrl() + "?token=" + urlToken;
-        StringRequest downloadFileRequest = new StringRequest(Request.Method.GET, tradeRecordDetailFileURL,
-                new Response.Listener<String>() {
-                    Gson gson = new Gson();
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("downloadFile",response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("netValueError",error.getMessage(),error);
-            }
-        }){};
-        downloadFileQueue.add(downloadFileRequest);
+
+    public void downloadFileData(final AttachmentFileModel fileModel){
+        if (fileIsExists(fileModel)){
+
+        }else {
+            RequestQueue downloadFileQueue = Volley.newRequestQueue(this);
+            SharedPreferences preferences = getSharedPreferences(getResources().getString(R.string.loginSharedPreferences), Context.MODE_PRIVATE);
+            String urlToken = preferences.getString("token",null);
+            String tradeRecordDetailFileURL = getResources().getString(R.string.baseURL) + fileModel.getAccessUrl() + "?token=" + urlToken;
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(tradeRecordDetailFileURL));
+            //指定下载路径和下载文件名
+            request.setDestinationInExternalPublicDir("/download/Jaguar_Android/", fileModel.getFileName());
+            //获取下载管理器
+            DownloadManager downloadManager= (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+            //将下载任务加入下载队列，否则不会进行下载
+            downloadManager.enqueue(request);
+        }
+
+
     }
 
 
@@ -165,6 +193,91 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         tradeRecordDetailQueue.add(tradeRecordDetailRequest);
 
     }
+
+
+    private boolean checkEndsWithInStringArray(String checkItsEnd,String[] fileEndings){
+        for(String aEnd : fileEndings){
+            if(checkItsEnd.endsWith(aEnd))
+                return true;
+        }
+        return false;
+    }
+
+
+    public void openFileAndReview(AttachmentFileModel fileModel){
+        String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
+        String fileName = fileModel.getFileName();
+        File file = new File(filePath,fileName);
+        if(file!=null && file.isFile())
+        {
+            Intent intent;
+            if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingImage))){
+                intent = OpenFiles.getImageFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingWebText))){
+                intent = OpenFiles.getHtmlFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingPackage))){
+                intent = OpenFiles.getApkFileIntent(file);
+                startActivity(intent);
+
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingAudio))){
+                intent = OpenFiles.getAudioFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingVideo))){
+                intent = OpenFiles.getVideoFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingText))){
+                intent = OpenFiles.getTextFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingPdf))){
+                intent = OpenFiles.getPdfFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingWord))){
+                intent = OpenFiles.getWordFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingExcel))){
+                intent = OpenFiles.getExcelFileIntent(file);
+                startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, getResources().
+                    getStringArray(R.array.fileEndingPPT))){
+                intent = OpenFiles.getPPTFileIntent(file);
+                startActivity(intent);
+            }else
+            {
+                Log.e("1","无法打开，请安装相应的软件！");
+            }
+        }else
+        {
+            Log.e("2","对不起，这不是文件！");
+        }
+
+    }
+
+    public boolean fileIsExists(AttachmentFileModel fileModel){
+        try{
+            String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
+            String fileName = fileModel.getFileName();
+            File file = new File(filePath,fileName);
+            if(!file.exists()){
+                return false;
+            }
+
+        }catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
 
 
     public void setActivityTextViewText(TradeRecordDetailModel model){
@@ -219,4 +332,5 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         TextView bankNameText = (TextView)findViewById(R.id.bankName);
         bankNameText.setText(model.getBankName());
     }
+
 }

@@ -26,10 +26,14 @@ public class AttachmentFileListAdapter extends BaseAdapter {
     private List<Object> fileModels;
 
 
-    public AttachmentFileListAdapter(Context context, List<Object> files){
+    public AttachmentFileListAdapter(Context context){
         super();
         this.mInflater = LayoutInflater.from(context);
         this.ctx = context;
+        fileModels = new ArrayList<Object>();
+    }
+
+    public void updatefileList(List<Object> files){
         this.fileModels = files;
     }
 
@@ -59,7 +63,6 @@ public class AttachmentFileListAdapter extends BaseAdapter {
             Button moreBtn = (Button)view1.findViewById(R.id.tradeMoreBtn);
             moreBtn.setVisibility(View.GONE);
         }else if(item instanceof AttachmentFileModel){
-            Log.e("--------------","________________");
             AttachmentFileModel fileModel = (AttachmentFileModel)item;
             view1 = mInflater.inflate(R.layout.layout_my_list_item,null);
             TextView text = (TextView)view1.findViewById(R.id.textLab);
