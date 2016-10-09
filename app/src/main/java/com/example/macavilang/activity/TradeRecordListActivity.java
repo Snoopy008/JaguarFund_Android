@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -47,6 +50,18 @@ public class TradeRecordListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_record_list);
+        TextView titleText = (TextView)findViewById(R.id.title_text);
+        titleText.setText("所有交易列表");
+        ImageButton backBtn = (ImageButton)findViewById(R.id.backButton);
+
+        backBtn.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         tradeRecordListView = (PullToRefreshListView) findViewById(R.id.TradeRecordListView);
         TradeRecordSearchView = (SearchView) findViewById(R.id.TradeRecordSearchView);
         tradeRecordListView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -57,7 +72,7 @@ public class TradeRecordListActivity extends AppCompatActivity {
         tradeRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TradeRecordModel tradeRecordModel = tradeRecords.get(i);
+                TradeRecordModel tradeRecordModel = tradeRecords.get(i-1);
                 Intent intent = new Intent(TradeRecordListActivity.this,TradeRecordDetailActivity.class);
                 intent.putExtra("tradeRecordId",tradeRecordModel.getId());
                 startActivity(intent);
@@ -140,6 +155,8 @@ public class TradeRecordListActivity extends AppCompatActivity {
                         JsonParser jsonParser = new JsonParser();
                         JsonElement jsonElement = jsonParser.parse(response);
                         JsonElement tradeRecordJson = jsonElement.getAsJsonObject().get("list");
+                        JsonElement totalPageJson = jsonElement.getAsJsonObject().get("totalPage");
+                        totalPage = totalPageJson.getAsInt();
                         Type tradeRecordListType = new TypeToken<List<TradeRecordModel>>(){}.getType();
                         if (isLoad){
                             List<TradeRecordModel> moreTradeRecords = (List<TradeRecordModel>) gson.fromJson(tradeRecordJson,tradeRecordListType);
