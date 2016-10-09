@@ -15,7 +15,6 @@ public class AttachmentFileModel {
     String tags;
     String accessUrl;
     String contentType;
-    String data;
 
     public String getId() {
         return id;
