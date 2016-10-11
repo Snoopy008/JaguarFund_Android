@@ -75,7 +75,7 @@ public class CustomerDetail_tradeRecordsFragment extends Fragment {
         customerTradeRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TradeRecordModel tradeRecordModel = tradeRecords.get(i);
+                TradeRecordModel tradeRecordModel = (TradeRecordModel)adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getContext(),TradeRecordDetailActivity.class);
                 intent.putExtra("tradeRecordId",tradeRecordModel.getId());
                 startActivity(intent);

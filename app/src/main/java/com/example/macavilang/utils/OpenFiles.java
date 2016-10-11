@@ -1,7 +1,13 @@
 package com.example.macavilang.utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
+
+import com.example.macavilang.jaguarfund_android.R;
+import com.example.macavilang.model.AttachmentFileModel;
 
 import java.io.File;
 
@@ -122,6 +128,90 @@ public class OpenFiles {
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(file),  "application/vnd.android.package-archive");
         return intent;
+    }
+
+
+    public static  boolean fileIsExists(AttachmentFileModel fileModel){
+        try{
+            String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
+            String fileName = fileModel.getFileName();
+            File file = new File(filePath,fileName);
+            if(!file.exists()){
+                return false;
+            }
+
+        }catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void openFileAndReview(AttachmentFileModel fileModel, Context context){
+        String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
+        String fileName = fileModel.getFileName();
+        File file = new File(filePath,fileName);
+        if(file!=null && file.isFile())
+        {
+            Intent intent;
+            if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingImage))){
+                intent = OpenFiles.getImageFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingWebText))){
+                intent = OpenFiles.getHtmlFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingPackage))){
+                intent = OpenFiles.getApkFileIntent(file);
+                context.startActivity(intent);
+
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingAudio))){
+                intent = OpenFiles.getAudioFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingVideo))){
+                intent = OpenFiles.getVideoFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingText))){
+                intent = OpenFiles.getTextFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingPdf))){
+                intent = OpenFiles.getPdfFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingWord))){
+                intent = OpenFiles.getWordFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingExcel))){
+                intent = OpenFiles.getExcelFileIntent(file);
+                context.startActivity(intent);
+            }else if(checkEndsWithInStringArray(fileName, context.getResources().
+                    getStringArray(R.array.fileEndingPPT))){
+                intent = OpenFiles.getPPTFileIntent(file);
+                context.startActivity(intent);
+            }else
+            {
+                Log.e("1","无法打开，请安装相应的软件！");
+            }
+        }else
+        {
+            Log.e("2","对不起，这不是文件！");
+        }
+
+    }
+
+
+    private static boolean checkEndsWithInStringArray(String checkItsEnd,String[] fileEndings){
+        for(String aEnd : fileEndings){
+            if(checkItsEnd.endsWith(aEnd))
+                return true;
+        }
+        return false;
     }
 
 

@@ -74,7 +74,7 @@ public class ProductFragment extends Fragment {
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ProductModel productModel = products.get(i);
+                ProductModel productModel=(ProductModel)adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getContext(),ProductDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("productModel",productModel);
@@ -147,7 +147,7 @@ public class ProductFragment extends Fragment {
         productBuildUrl.appendQueryParameter("keyWords",searchWords);
         productBuildUrl.appendQueryParameter("page", String.valueOf(page));
         productBuildUrl.appendQueryParameter("pageSize","10");
-        productBuildUrl.appendQueryParameter("sort","-fundTotalAmount");
+        productBuildUrl.appendQueryParameter("sort","-fundAmountCurrent");
         String productTotalUrl = productBuildUrl.build().toString();
         StringRequest productListRequest = new StringRequest(Request.Method.GET, productTotalUrl,
                 new Response.Listener<String>() {
@@ -158,6 +158,8 @@ public class ProductFragment extends Fragment {
                         JsonParser jsonParser = new JsonParser();
                         JsonElement jsonElement = jsonParser.parse(response);
                         JsonElement productListJson = jsonElement.getAsJsonObject().get("list");
+                        JsonElement totalPageJson = jsonElement.getAsJsonObject().get("totalPage");
+                        totalPage = totalPageJson.getAsInt();
                         Type productListType = new TypeToken<List<ProductModel>>(){}.getType();
                         if (isLoad){
                             List<ProductModel> moreProducts = (List<ProductModel>) gson.fromJson(productListJson,productListType);

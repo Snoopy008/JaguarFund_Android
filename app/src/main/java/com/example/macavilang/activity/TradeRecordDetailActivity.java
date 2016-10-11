@@ -83,8 +83,8 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         fileListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AttachmentFileModel fileModel = (AttachmentFileModel)fileMainList.get(position);
-                openFileAndReview(fileModel);
+                AttachmentFileModel fileModel = (AttachmentFileModel)parent.getItemAtPosition(position);
+                OpenFiles.openFileAndReview(fileModel,TradeRecordDetailActivity.this);
             }
         });
 
@@ -139,7 +139,7 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
 
 
     public void downloadFileData(final AttachmentFileModel fileModel){
-        if (fileIsExists(fileModel)){
+        if (OpenFiles.fileIsExists(fileModel)){
 
         }else {
             RequestQueue downloadFileQueue = Volley.newRequestQueue(this);
@@ -195,88 +195,7 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
     }
 
 
-    private boolean checkEndsWithInStringArray(String checkItsEnd,String[] fileEndings){
-        for(String aEnd : fileEndings){
-            if(checkItsEnd.endsWith(aEnd))
-                return true;
-        }
-        return false;
-    }
 
-
-    public void openFileAndReview(AttachmentFileModel fileModel){
-        String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
-        String fileName = fileModel.getFileName();
-        File file = new File(filePath,fileName);
-        if(file!=null && file.isFile())
-        {
-            Intent intent;
-            if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingImage))){
-                intent = OpenFiles.getImageFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingWebText))){
-                intent = OpenFiles.getHtmlFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPackage))){
-                intent = OpenFiles.getApkFileIntent(file);
-                startActivity(intent);
-
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingAudio))){
-                intent = OpenFiles.getAudioFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingVideo))){
-                intent = OpenFiles.getVideoFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingText))){
-                intent = OpenFiles.getTextFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPdf))){
-                intent = OpenFiles.getPdfFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingWord))){
-                intent = OpenFiles.getWordFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingExcel))){
-                intent = OpenFiles.getExcelFileIntent(file);
-                startActivity(intent);
-            }else if(checkEndsWithInStringArray(fileName, getResources().
-                    getStringArray(R.array.fileEndingPPT))){
-                intent = OpenFiles.getPPTFileIntent(file);
-                startActivity(intent);
-            }else
-            {
-                Log.e("1","无法打开，请安装相应的软件！");
-            }
-        }else
-        {
-            Log.e("2","对不起，这不是文件！");
-        }
-
-    }
-
-    public boolean fileIsExists(AttachmentFileModel fileModel){
-        try{
-            String filePath = Environment.getExternalStorageDirectory().toString() + "/download/Jaguar_Android/";
-            String fileName = fileModel.getFileName();
-            File file = new File(filePath,fileName);
-            if(!file.exists()){
-                return false;
-            }
-
-        }catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 
 
 

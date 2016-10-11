@@ -134,8 +134,6 @@ public class TradeRecordListActivity extends AppCompatActivity {
 
     }
 
-
-
     public void getTradeRecordListData(String searchWords, int page, final Boolean isLoad){
         RequestQueue tradeRecordListQueue = Volley.newRequestQueue(this);
         String tradeUrl = getResources().getString(R.string.baseURL) + "api/fund/trades";

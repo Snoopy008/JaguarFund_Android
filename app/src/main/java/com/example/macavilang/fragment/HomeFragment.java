@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
         homelistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Object item = mainList.get(i);
+               Object item = adapterView.getItemAtPosition(i);
                 if (item instanceof TradeRecordModel)
                 {
                     TradeRecordModel tradeRecordModel = (TradeRecordModel)item;
@@ -124,23 +124,24 @@ public class HomeFragment extends Fragment {
                         List<BirthdayMessageModel> birthdays = (List<BirthdayMessageModel>) gson.fromJson(birthdayJson,birthdayListType);
                         mainList.add("事件提醒");
                         for (BirthdayMessageModel model:birthdays) {
-                            RememberMessageModel messageModel = new RememberMessageModel();
+                            if(isRangeOfThreeDays(model.getClientBirthday())){
+                                RememberMessageModel messageModel = new RememberMessageModel();
 
-                            messageModel.setRememberMessageStr(model.getBirthdayMessageStr());
-                            mainList.add(messageModel);
+                                messageModel.setRememberMessageStr(model.getBirthdayMessageStr());
+                                mainList.add(messageModel);
+                            }
                         }
 
                         JsonElement openDayJson = jsonElement.getAsJsonObject().get("openDayList");
                         Type openDayListType = new TypeToken<List<OpenDayMessageModel>>(){}.getType();
                         List<OpenDayMessageModel> openDays = (List<OpenDayMessageModel>) gson.fromJson(openDayJson,openDayListType);
                         for (OpenDayMessageModel model:openDays) {
-//                            if (isRangeOfThreeDays(model.getOpenDay()))
+                            if (isRangeOfThreeDays(model.getOpenDay()))
                             {
                                 RememberMessageModel messageModel = new RememberMessageModel();
                                 messageModel.setRememberMessageStr(model.getOpenDayMessageStr());
                                 mainList.add(messageModel);
                             }
-
                         }
 
                         JsonElement warningPriceJson = jsonElement.getAsJsonObject().get("warningPriceList");

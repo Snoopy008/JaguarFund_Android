@@ -52,8 +52,8 @@ public class WarningPriceMessageModel {
     }
 
     public String getWarningPriceMessageStr() {
-        String warningPriceStr = productName + "净值已经跌至" + warningPrice;
-        return warningPriceMessageStr;
+        String warningPriceStr = latestNetValueDate + productName + "净值已经跌至" + warningPrice;
+        return warningPriceStr;
     }
 
     public void setWarningPriceMessageStr(String warningPriceMessageStr) {

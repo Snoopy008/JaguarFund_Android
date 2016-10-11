@@ -75,7 +75,7 @@ public class CustomerFragment extends Fragment {
         customer_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CustomerModel customerModel = customers.get(i);
+                CustomerModel customerModel = (CustomerModel)adapterView.getItemAtPosition(i);
                 Intent intent = new Intent(getContext(),CustomerDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("customerModel",customerModel);

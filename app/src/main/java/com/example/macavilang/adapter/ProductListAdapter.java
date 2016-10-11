@@ -53,7 +53,7 @@ public class ProductListAdapter extends BaseAdapter {
         view1 = mInflater.inflate(R.layout.layout_product_list_item,null);
 
         TextView product_perNetValueText = (TextView)view1.findViewById(R.id.product_perNetValueText);
-        product_perNetValueText.setText(productModel.getLatestNetValueView());
+        product_perNetValueText.setText(productModel.getLatestNetValue());
 
         TextView product_productName = (TextView) view1.findViewById(R.id.product_productName);
         product_productName.setText(productModel.getProductShortName());
@@ -65,7 +65,7 @@ public class ProductListAdapter extends BaseAdapter {
         product_investShare.setText(productModel.getFundCurrentShare());
 
         TextView product_investAmount = (TextView) view1.findViewById(R.id.product_investAmount);
-        product_investAmount.setText(productModel.getFundTotalAmount());
+        product_investAmount.setText(productModel.getFundAmountCurrent());
         return view1;
     }
 }
