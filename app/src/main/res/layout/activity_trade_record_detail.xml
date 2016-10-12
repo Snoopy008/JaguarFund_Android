@@ -90,37 +90,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="TA代码"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:textColor="#000000"/>
-
-                <TextView
-                    android:id="@+id/taCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical|left"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#c9c8c8"/>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
                     android:text="联系电话"
                     android:layout_weight="1"
                     android:textSize="20sp"
@@ -396,39 +365,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c9c8c8"/>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="当前净值(元)"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:textColor="#000000"/>
-
-                <TextView
-                    android:id="@+id/currenNetValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:gravity="center_vertical|left"/>
-
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#c9c8c8"/>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

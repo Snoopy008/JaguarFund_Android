@@ -20,6 +20,26 @@ public class CustomerModel implements Serializable {
     String investShareAmountTotalCN;
     String customerType;
     String customerTypeView;
+    String ownProductCount;
+    String pid;
+    String pidType;
+
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getPidType() {
+        return pidType;
+    }
+
+    public void setPidType(String pidType) {
+        this.pidType = pidType;
+    }
 
     public String getClientName() {
         return clientName;
@@ -132,5 +152,13 @@ public class CustomerModel implements Serializable {
 
     public void setCustomerTypeView(String customerTypeView) {
         this.customerTypeView = customerTypeView;
+    }
+
+    public String getOwnProductCount() {
+        return ownProductCount;
+    }
+
+    public void setOwnProductCount(String ownProductCount) {
+        this.ownProductCount = ownProductCount;
     }
 }

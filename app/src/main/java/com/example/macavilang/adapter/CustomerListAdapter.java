@@ -59,22 +59,27 @@ public class CustomerListAdapter extends BaseAdapter{
         view1 = mInflater.inflate(R.layout.layout_customer_list_item,null);
         TextView customer_investProductNumber = (TextView) view1.findViewById(R.id.customer_investProductNumber);
         TextView customer_investProductNumberTitle = (TextView) view1.findViewById(R.id.customer_investProductNumberTitle);
-        if (isPartViewRemove){
-            customer_investProductNumber.setVisibility(View.GONE);
-            customer_investProductNumberTitle.setVisibility(View.GONE);
-        }else {
-
-            customer_investProductNumber.setText(customerModel.getInvestProductCount());
-        }
 
         TextView customer_customerName = (TextView)view1.findViewById(R.id.customer_customerName);
         customer_customerName.setText(customerModel.getClientName());
 
         TextView customer_investShare = (TextView) view1.findViewById(R.id.customer_investShare);
-        customer_investShare.setText(customerModel.getInvestShareCurrent());
+
 
         TextView customer_investAmount = (TextView) view1.findViewById(R.id.customer_investAmount);
-        customer_investAmount.setText(customerModel.getInvestShareAmountCurrent());
+
+
+        if (isPartViewRemove){
+            customer_investProductNumber.setVisibility(View.GONE);
+            customer_investProductNumberTitle.setVisibility(View.GONE);
+            customer_investShare.setText(customerModel.getInvestShareCurrent());
+            customer_investAmount.setText(customerModel.getInvestShareAmountCurrent());
+        }else {
+            customer_investProductNumber.setText(customerModel.getOwnProductCount());
+            customer_investShare.setText(customerModel.getInvestShareTotal());
+            customer_investAmount.setText(customerModel.getInvestShareAmountTotal());
+        }
+
         return view1;
     }
 }

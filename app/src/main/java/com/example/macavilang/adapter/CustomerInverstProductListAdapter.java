@@ -52,10 +52,13 @@ public class CustomerInverstProductListAdapter extends BaseAdapter {
         customerDetail_customerInverst_inverstAmount.setText(customerInverstProductModel.getInvestAmount());
 
         TextView customerDetail_customerInverst_productName = (TextView) view1.findViewById(R.id.customerDetail_customerInverst_productName);
-        customerDetail_customerInverst_productName.setText(customerInverstProductModel.getFundName());
+        customerDetail_customerInverst_productName.setText(customerInverstProductModel.getProductShortName());
 
         TextView customerDetail_customerInverst_inverstShare = (TextView) view1.findViewById(R.id.customerDetail_customerInverst_inverstShare);
-        customerDetail_customerInverst_inverstShare.setText(customerInverstProductModel.getNetValue());
+        customerDetail_customerInverst_inverstShare.setText(customerInverstProductModel.getInvestShare());
+
+        TextView customerDetail_customerInverst_perNetValue = (TextView) view1.findViewById(R.id.customerDetail_customerInverst_perNetValue);
+        customerDetail_customerInverst_perNetValue.setText(customerInverstProductModel.getNetValue());
 
         TextView customerDetail_customerInverst_totalNetValue = (TextView) view1.findViewById(R.id.customerDetail_customerInverst_totalNetValue);
         customerDetail_customerInverst_totalNetValue.setText(customerInverstProductModel.getTotalNetValue());

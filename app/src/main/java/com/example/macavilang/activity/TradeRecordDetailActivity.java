@@ -206,20 +206,18 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         TextView customerTypeText = (TextView)findViewById(R.id.customerType);
         customerTypeText.setText(model.getCustomerType());
 
-        TextView taCodeText = (TextView)findViewById(R.id.taCode);
-        taCodeText.setText(model.getTacode());
 
         TextView telephoneText = (TextView)findViewById(R.id.telephone);
-        telephoneText.setText(model.getClientMobile());
+        telephoneText.setText(model.getMobile());
 
-//        TextView identityTypeText = (TextView)findViewById(R.id.identityType);
-//        identityTypeText.setText(model.getPidType());
+        TextView identityTypeText = (TextView)findViewById(R.id.identityType);
+        identityTypeText.setText(model.getPidType());
 
         TextView identityNumberText = (TextView)findViewById(R.id.identityNumber);
         identityNumberText.setText(model.getPid());
 
         TextView addressText = (TextView)findViewById(R.id.address);
-        addressText.setText(model.getClientAddress());
+        addressText.setText(model.getAddress());
 
         TextView fundNameText = (TextView)findViewById(R.id.productName);
         fundNameText.setText(model.getProductName());
@@ -234,10 +232,7 @@ public class TradeRecordDetailActivity extends AppCompatActivity {
         tradeTypeText.setText(model.getTradeType());
 
         TextView tradeNetValueText = (TextView)findViewById(R.id.tradeNetValue);
-        tradeNetValueText.setText(model.getUnitPrice());
-
-        TextView currenNetValueText = (TextView)findViewById(R.id.currenNetValue);
-        currenNetValueText.setText(model.getLatestNetValue());
+        tradeNetValueText.setText(model.getUnitPriceView());
 
         TextView tradeShareText = (TextView)findViewById(R.id.tradeShare);
         tradeShareText.setText(model.getTradeShare());

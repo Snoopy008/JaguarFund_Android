@@ -33,29 +33,23 @@ public class CustomerDetail_customerInfoFragment extends Fragment {
             TextView customerDetail_customerInfo_customerName = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_customerName);
             customerDetail_customerInfo_customerName.setText(customerModel.getClientName());
 
-            TextView customerDetail_customerInfo_customerType = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_customerType);
-            customerDetail_customerInfo_customerType.setText(customerModel.getCustomerType());
-
-//            TextView customerDetail_customerInfo_taCode = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_taCode);
-//            customerDetail_customerInfo_taCode.setText(customerModel.get());
-
             TextView customerDetail_customerInfo_telephone = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_telephone);
             customerDetail_customerInfo_telephone.setText(customerModel.getMobile());
 
-//            TextView customerDetail_customerInfo_identityType = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_identityType);
-//            customerDetail_customerInfo_identityType.setText(customerModel.ge());
+            TextView customerDetail_customerInfo_identityType = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_identityType);
+            customerDetail_customerInfo_identityType.setText(customerModel.getPidType());
 
-//            TextView customerDetail_customerInfo_customerName = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_customerName);
-//            customerDetail_customerInfo_customerName.setText(customerModel.getName());
+            TextView customerDetail_customerInfo_identityNumber = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_identityNumber);
+            customerDetail_customerInfo_identityNumber.setText(customerModel.getPid());
 
             TextView customerDetail_customerInfo_address = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_address);
             customerDetail_customerInfo_address.setText(customerModel.getAddress());
 
             TextView customerDetail_customerInfo_inverstShare = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_inverstShare);
-            customerDetail_customerInfo_inverstShare.setText(customerModel.getInvestShareCurrent());
+            customerDetail_customerInfo_inverstShare.setText(customerModel.getInvestShareTotal());
 
             TextView customerDetail_customerInfo_inverstAmount = (TextView)rootView.findViewById(R.id.customerDetail_customerInfo_inverstAmount);
-            customerDetail_customerInfo_inverstAmount.setText(customerModel.getInvestShareAmountCurrent());
+            customerDetail_customerInfo_inverstAmount.setText(customerModel.getInvestShareAmountTotal());
 
 
         }

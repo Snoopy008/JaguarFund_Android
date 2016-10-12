@@ -9,16 +9,17 @@ public class TradeRecordDetailModel {
     String productId;
     String clientName;
     String customerType;
-    String clientMobile;
+    String mobile;
     String pidType;
     String pid;
-    String clientAddress;
+    String address;
     String clientRemark;
     String productName;
     String fundCode;
     String contractNo;
     String tradeType;
     String unitPrice;
+    String unitPriceView;
     String latestNetValue;
     String tradeShare;
     String tradeAmount;
@@ -57,8 +58,24 @@ public class TradeRecordDetailModel {
         return clientName;
     }
 
+    public String getUnitPriceView() {
+        return unitPriceView;
+    }
+
+    public void setUnitPriceView(String unitPriceView) {
+        this.unitPriceView = unitPriceView;
+    }
+
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getCustomerType() {
@@ -76,13 +93,6 @@ public class TradeRecordDetailModel {
         this.customerType = customerType;
     }
 
-    public String getClientMobile() {
-        return clientMobile;
-    }
-
-    public void setClientMobile(String clientMobile) {
-        this.clientMobile = clientMobile;
-    }
 
     public String getPidType() {
         if (pidType.equals("1"))
@@ -110,12 +120,12 @@ public class TradeRecordDetailModel {
         this.pid = pid;
     }
 
-    public String getClientAddress() {
-        return clientAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setClientAddress(String clientAddress) {
-        this.clientAddress = clientAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getClientRemark() {

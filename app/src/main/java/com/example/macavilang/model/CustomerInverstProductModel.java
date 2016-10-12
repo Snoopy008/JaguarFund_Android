@@ -5,7 +5,7 @@ package com.example.macavilang.model;
  */
 public class CustomerInverstProductModel {
     String productId;
-    String fundName;
+    String productShortName;
     String investShare;
     String investAmount;
     String netValue;
@@ -19,12 +19,12 @@ public class CustomerInverstProductModel {
         this.productId = productId;
     }
 
-    public String getFundName() {
-        return fundName;
+    public String getProductShortName() {
+        return productShortName;
     }
 
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
+    public void setProductShortName(String productShortName) {
+        this.productShortName = productShortName;
     }
 
     public String getInvestShare() {

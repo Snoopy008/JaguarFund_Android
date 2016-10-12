@@ -152,7 +152,7 @@ public class CustomerFragment extends Fragment {
                     Gson gson = new Gson();
                     @Override
                     public void onResponse(String response) {
-                        Log.e("customerListError",response);
+                        Log.e("customerList",response);
                         JsonParser jsonParser = new JsonParser();
                         JsonElement jsonElement = jsonParser.parse(response);
                         JsonElement customerListJson = jsonElement.getAsJsonObject().get("list");

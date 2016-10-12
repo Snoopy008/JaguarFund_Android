@@ -83,7 +83,7 @@ public class ProductDetail_productInfo_Fragment extends Fragment {
             productDetail_productInfo_perNetValue.setText(productModel.getLatestNetValue());
 
             TextView productDetail_productInfo_totalNetValue = (TextView)rootView.findViewById(R.id.productDetail_productInfo_totalNetValue);
-            productDetail_productInfo_totalNetValue.setText(productModel.getLatestAccumulativeNetValueView());
+            productDetail_productInfo_totalNetValue.setText(productModel.getLatestAccumulativeNetValue());
 
             TextView productDetail_productInfo_inverstPeople = (TextView)rootView.findViewById(R.id.productDetail_productInfo_inverstPeople);
             productDetail_productInfo_inverstPeople.setText(productModel.getFundCurrentOwnerNumber());
