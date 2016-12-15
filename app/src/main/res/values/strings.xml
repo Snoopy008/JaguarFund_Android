@@ -3,9 +3,6 @@
 
 
     <!--BaseUrl-->
-    <!--<string name="baseURL">"http://vsm.vilang.com/"</string>-->
-    <string name="baseURL">"http://vsmdemo.vilang.com/"</string>
-    <!--<string name="baseURL">"http://192.168.1.5:8080/"</string>-->
 
     <!--sharedPreferences-->
     <string name="loginSharedPreferences">"accountInfo"</string>
